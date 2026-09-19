@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>إدارة فالهالا</title>
+
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+
+<body>
+
+
+    <!-- =========================
+         زر القائمة
+    ========================== -->
+
+    <button id="adminMenuBtn" class="admin-menu-btn" type="button">
+        ☰
+    </button>
+
+
+    <!-- =========================
+         القائمة
+    ========================== -->
+
+    <div id="adminSideMenu" class="admin-side-menu">
+
+        <div class="admin-side-menu-title">
+            ⚜️ فالهالا
+        </div>
+
+        <a href="index.html" class="admin-side-menu-item">
+            🪙 بنك فالهالا
+        </a>
+
+        <a href="admin.html" class="admin-side-menu-item">
+            ⚜️ إدارة فالهالا
+        </a>
+
+        <a href="edit-bank.html" class="admin-side-menu-item">
+            ⚙️ إدارة تعديل البنك
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         الترحيب
+    ========================== -->
+
+    <header class="admin-hero">
+
+        <div class="admin-logo">
+            ⚜️
+        </div>
+
+        <h1>
+            أهلاً بك في إدارة فالهالا ⚙️
+        </h1>
+
+    </header>
+
+
+    <!-- =========================
+         المحتوى
+    ========================== -->
+
+    <main>
+
+        <!-- =========================
+             مسؤولون الإدارة
+        ========================== -->
+
+        <section class="admins-section">
+
+            <h2>
+                مسئولون الإدارة
+            </h2>
+
+
+            <div class="admin-card">
+
+                <div class="admin-image">
+                    ⚜️
+                </div>
+
+
+                <div class="admin-info">
+
+                    <p>
+                        <strong>اللقب :-</strong>
+                        <span>ايس</span>
+                    </p>
+
+                    <p>
+                        <strong>التواصل :-</strong>
+                        <a href="https://wa.me/9647714888752"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            واتساب
+                        </a>
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         تشغيل القائمة
+    ========================== -->
+
+    <script>
+
+        const adminMenuBtn =
+            document.getElementById("adminMenuBtn");
+
+        const adminSideMenu =
+            document.getElementById("adminSideMenu");
+
+
+        adminMenuBtn.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            adminSideMenu.classList.toggle("active");
+
+        });
+
+
+        adminSideMenu.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+        });
+
+
+        document.addEventListener("click", function() {
+
+            adminSideMenu.classList.remove("active");
+
+        });
+
+    </script>
+
+</body>
+
+</html>

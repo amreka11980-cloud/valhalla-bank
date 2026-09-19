@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        إدارة تعديل البنك
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="edit-bank-style.css"
+    >
+
+</head>
+
+<body>
+
+
+<button
+    id="menuBtn"
+    class="menu-btn"
+    type="button"
+>
+    ☰
+</button>
+
+
+<div
+    id="sideMenu"
+    class="side-menu"
+>
+
+    <div class="side-menu-title">
+        ⚜️ فالهالا
+    </div>
+
+    <a
+        href="index.html"
+        class="side-menu-item"
+    >
+        🪙 بنك فالهالا
+    </a>
+
+    <a
+        href="admin.html"
+        class="side-menu-item"
+    >
+        ⚜️ إدارة فالهالا
+    </a>
+
+    <a
+        href="edit-bank.html"
+        class="side-menu-item"
+    >
+        ⚙️ إدارة تعديل البنك
+    </a>
+
+</div>
+
+
+<header class="hero">
+
+    <div class="logo">
+        ⚜️
+    </div>
+
+    <h1>
+        إدارة تعديل البنك ⚙️
+    </h1>
+
+    <p>
+        صلاحيات المسؤولين
+    </p>
+
+</header>
+
+
+<main>
+
+
+<!-- =====================================
+     تسجيل الدخول
+===================================== -->
+
+<section
+    id="loginSection"
+    class="edit-section"
+>
+
+    <h2>
+        🔐 تسجيل دخول المسؤول
+    </h2>
+
+
+    <label for="adminName">
+        اللقب
+    </label>
+
+    <input
+        type="text"
+        id="adminName"
+        placeholder="اكتب لقبك"
+        autocomplete="off"
+    >
+
+
+    <label for="adminCode">
+        الرمز
+    </label>
+
+    <input
+        type="password"
+        id="adminCode"
+        placeholder="اكتب الرمز"
+        autocomplete="off"
+    >
+
+
+    <button
+        id="loginBtn"
+        class="purchase-button"
+        type="button"
+    >
+        🔐 دخول
+    </button>
+
+
+    <p
+        id="loginMessage"
+        style="
+            text-align:center;
+            margin-top:15px;
+            color:#d4af37;
+        "
+    ></p>
+
+</section>
+
+
+<div
+    id="bankControls"
+    style="display:none;"
+>
+
+
+<!-- =====================================
+     إضافة عضو
+===================================== -->
+
+<section class="edit-section">
+
+    <h2>
+        👤 إضافة عضو
+    </h2>
+
+
+    <label for="newMemberName">
+        لقب العضو
+    </label>
+
+    <input
+        type="text"
+        id="newMemberName"
+        placeholder="مثال: لوفي"
+        autocomplete="off"
+    >
+
+
+    <label for="newMemberMoney">
+        الرصيد الابتدائي
+    </label>
+
+    <input
+        type="number"
+        id="newMemberMoney"
+        placeholder="مثال: 100"
+        min="0"
+    >
+
+
+    <label for="newMemberImage">
+        صورة العضو 📷
+    </label>
+
+    <!-- اختيار صورة من الجهاز -->
+    <input
+        type="file"
+        id="newMemberImage"
+        accept="image/*"
+    >
+
+
+    <button
+        id="addMember"
+        class="purchase-button"
+        type="button"
+    >
+        ➕ إضافة العضو
+    </button>
+
+
+    <p
+        style="
+            text-align:center;
+            color:#aaa;
+            margin-top:15px;
+            font-size:14px;
+        "
+    >
+        اختر صورة العضو من جهازك.
+        <br>
+        إذا لم تختر صورة سيتم وضع ⚜️ تلقائياً.
+    </p>
+
+</section>
+
+
+<!-- =====================================
+     حذف عضو
+===================================== -->
+
+<section class="edit-section">
+
+    <h2>
+        🗑️ حذف عضو
+    </h2>
+
+
+    <label for="deleteMember">
+        اختر العضو
+    </label>
+
+
+    <select id="deleteMember"></select>
+
+
+    <button
+        id="deleteMemberBtn"
+        class="purchase-button"
+        type="button"
+    >
+        🗑️ حذف العضو
+    </button>
+
+
+    <p
+        style="
+            text-align:center;
+            color:#aaa;
+            margin-top:15px;
+            font-size:14px;
+        "
+    >
+        ⚠️ حذف العضو يحذف رصيده
+        وعمليات الشراء الخاصة به.
+    </p>
+
+</section>
+
+
+<!-- =====================================
+     تعديل البيلي
+===================================== -->
+
+<section class="edit-section">
+
+    <h2>
+        🪙 تعديل البيلي
+    </h2>
+
+
+    <label for="memberSelect">
+        اختر العضو
+    </label>
+
+
+    <select id="memberSelect"></select>
+
+
+    <label for="moneyAmount">
+        المبلغ
+    </label>
+
+
+    <input
+        type="number"
+        id="moneyAmount"
+        placeholder="مثال: 50"
+        min="1"
+    >
+
+
+    <div class="money-buttons">
+
+        <button
+            id="addMoney"
+            type="button"
+        >
+            ➕ إضافة بيلي
+        </button>
+
+
+        <button
+            id="removeMoney"
+            type="button"
+        >
+            ➖ خصم بيلي
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================
+     المشتريات
+===================================== -->
+
+<section class="edit-section">
+
+    <h2>
+        🛒 إضافة عملية شراء
+    </h2>
+
+
+    <label for="purchaseMember">
+        اختر العضو
+    </label>
+
+
+    <select id="purchaseMember"></select>
+
+
+    <label for="purchaseName">
+        اسم المشتريات
+    </label>
+
+
+    <input
+        type="text"
+        id="purchaseName"
+        placeholder="مثال: رتبة VIP"
+    >
+
+
+    <label for="purchasePrice">
+        السعر
+    </label>
+
+
+    <input
+        type="number"
+        id="purchasePrice"
+        placeholder="مثال: 50"
+        min="1"
+    >
+
+
+    <button
+        id="addPurchase"
+        class="purchase-button"
+        type="button"
+    >
+        🛒 إضافة العملية
+    </button>
+
+</section>
+
+
+</div>
+
+</main>
+
+
+<script>
+
+
+/* =====================================
+   المسؤولون
+===================================== */
+
+const ADMINS = {
+
+    "ايس": "4608",
+
+    "شارلوك": "1324",
+
+    "شيسوي": "4321"
+
+};
+
+
+/* =====================================
+   الأعضاء الأساسيون
+===================================== */
+
+const DEFAULT_MEMBERS = {
+
+    "ايس": {
+        money: 100,
+        image: "⚜️",
+        purchases: []
+    },
+
+    "شارلوك": {
+        money: 250,
+        image: "⚜️",
+        purchases: []
+    },
+
+    "اوراهارا": {
+        money: 100,
+        image: "⚜️",
+        purchases: []
+    },
+
+    "شيسوي": {
+        money: 100,
+        image: "⚜️",
+        purchases: []
+    },
+
+    "رانبو": {
+        money: 100,
+        image: "⚜️",
+        purchases: []
+    }
+
+};
+
+
+/* =====================================
+   تحميل البيانات
+===================================== */
+
+let members = null;
+
+
+try {
+
+    members =
+        JSON.parse(
+            localStorage.getItem(
+                "valhallaMembers"
+            )
+        );
+
+} catch (error) {
+
+    members = null;
+
+}
+
+
+if (
+    !members ||
+    typeof members !== "object" ||
+    Array.isArray(members)
+) {
+
+    members = {};
+
+}
+
+
+/* =====================================
+   إعادة الأعضاء الأساسيين
+===================================== */
+
+Object.keys(DEFAULT_MEMBERS).forEach(
+    function(name) {
+
+        if (!members[name]) {
+
+            members[name] = {
+                ...DEFAULT_MEMBERS[name]
+            };
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   إصلاح البيانات
+===================================== */
+
+Object.keys(members).forEach(
+    function(name) {
+
+        if (
+            typeof members[name] === "number"
+        ) {
+
+            members[name] = {
+
+                money:
+                    members[name],
+
+                image:
+                    "⚜️",
+
+                purchases:
+                    []
+
+            };
+
+        }
+
+
+        if (
+            !members[name] ||
+            typeof members[name] !== "object"
+        ) {
+
+            delete members[name];
+
+            return;
+
+        }
+
+
+        if (
+            typeof members[name].money !==
+            "number"
+        ) {
+
+            members[name].money = 0;
+
+        }
+
+
+        if (!members[name].image) {
+
+            members[name].image =
+                "⚜️";
+
+        }
+
+
+        if (
+            !Array.isArray(
+                members[name].purchases
+            )
+        ) {
+
+            members[name].purchases = [];
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   حفظ
+===================================== */
+
+function saveMembers() {
+
+    localStorage.setItem(
+        "valhallaMembers",
+        JSON.stringify(members)
+    );
+
+}
+
+
+saveMembers();
+
+
+/* =====================================
+   تحديث القوائم
+===================================== */
+
+function updateMemberSelects() {
+
+    const selects = [
+
+        document.getElementById(
+            "memberSelect"
+        ),
+
+        document.getElementById(
+            "purchaseMember"
+        ),
+
+        document.getElementById(
+            "deleteMember"
+        )
+
+    ];
+
+
+    selects.forEach(
+        function(select) {
+
+            if (!select) {
+                return;
+            }
+
+
+            select.innerHTML = "";
+
+
+            Object.keys(members).forEach(
+                function(name) {
+
+                    const option =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    option.value =
+                        name;
+
+
+                    option.textContent =
+                        name;
+
+
+                    select.appendChild(
+                        option
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   تسجيل الدخول
+===================================== */
+
+const loginBtn =
+    document.getElementById(
+        "loginBtn"
+    );
+
+
+const loginSection =
+    document.getElementById(
+        "loginSection"
+    );
+
+
+const bankControls =
+    document.getElementById(
+        "bankControls"
+    );
+
+
+const loginMessage =
+    document.getElementById(
+        "loginMessage"
+    );
+
+
+loginBtn.addEventListener(
+    "click",
+    function() {
+
+        const name =
+            document
+            .getElementById(
+                "adminName"
+            )
+            .value
+            .trim();
+
+
+        const code =
+            document
+            .getElementById(
+                "adminCode"
+            )
+            .value
+            .trim();
+
+
+        if (
+            ADMINS[name] &&
+            ADMINS[name] === code
+        ) {
+
+            loginSection.style.display =
+                "none";
+
+
+            bankControls.style.display =
+                "block";
+
+
+            updateMemberSelects();
+
+
+            loginMessage.textContent = "";
+
+
+        } else {
+
+            loginMessage.textContent =
+                "❌ اللقب أو الرمز غير صحيح";
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   تحويل الصورة إلى Base64
+===================================== */
+
+function readImageAsDataURL(file) {
+
+    return new Promise(
+        function(resolve, reject) {
+
+            if (!file) {
+
+                resolve("⚜️");
+
+                return;
+
+            }
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(event) {
+
+                    resolve(
+                        event.target.result
+                    );
+
+                };
+
+
+            reader.onerror =
+                function() {
+
+                    reject(
+                        new Error(
+                            "تعذر قراءة الصورة"
+                        )
+                    );
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   إضافة عضو
+===================================== */
+
+document
+.getElementById("addMember")
+.addEventListener(
+    "click",
+    async function() {
+
+        const name =
+            document
+            .getElementById(
+                "newMemberName"
+            )
+            .value
+            .trim();
+
+
+        const money =
+            Number(
+                document
+                .getElementById(
+                    "newMemberMoney"
+                )
+                .value
+            );
+
+
+        const imageFile =
+            document
+            .getElementById(
+                "newMemberImage"
+            )
+            .files[0];
+
+
+        if (!name) {
+
+            alert(
+                "❌ اكتب لقب العضو"
+            );
+
+            return;
+
+        }
+
+
+        if (members[name]) {
+
+            alert(
+                "❌ هذا العضو موجود بالفعل"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            isNaN(money) ||
+            money < 0
+        ) {
+
+            alert(
+                "❌ اكتب رصيد صحيح"
+            );
+
+            return;
+
+        }
+
+
+        let image = "⚜️";
+
+
+        try {
+
+            image =
+                await readImageAsDataURL(
+                    imageFile
+                );
+
+        } catch (error) {
+
+            alert(
+                "❌ حدث خطأ أثناء قراءة الصورة"
+            );
+
+            return;
+
+        }
+
+
+        members[name] = {
+
+            money: money,
+
+            image: image,
+
+            purchases: []
+
+        };
+
+
+        saveMembers();
+
+        updateMemberSelects();
+
+
+        document
+        .getElementById(
+            "newMemberName"
+        )
+        .value = "";
+
+
+        document
+        .getElementById(
+            "newMemberMoney"
+        )
+        .value = "";
+
+
+        document
+        .getElementById(
+            "newMemberImage"
+        )
+        .value = "";
+
+
+        alert(
+            "✅ تمت إضافة العضو\n\n" +
+            "اللقب: " +
+            name
+        );
+
+    }
+);
+
+
+/* =====================================
+   حذف عضو
+===================================== */
+
+document
+.getElementById(
+    "deleteMemberBtn"
+)
+.addEventListener(
+    "click",
+    function() {
+
+        const name =
+            document
+            .getElementById(
+                "deleteMember"
+            )
+            .value;
+
+
+        if (!name) {
+
+            alert(
+                "❌ لا يوجد عضو محدد"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            !confirm(
+                "⚠️ هل أنت متأكد من حذف " +
+                name +
+                "؟\n\n" +
+                "سيتم حذف رصيده وعمليات الشراء الخاصة به."
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        delete members[name];
+
+
+        saveMembers();
+
+        updateMemberSelects();
+
+
+        alert(
+            "✅ تم حذف العضو " +
+            name
+        );
+
+    }
+);
+
+
+/* =====================================
+   إضافة بيلي
+===================================== */
+
+document
+.getElementById(
+    "addMoney"
+)
+.addEventListener(
+    "click",
+    function() {
+
+        const member =
+            document
+            .getElementById(
+                "memberSelect"
+            )
+            .value;
+
+
+        const amount =
+            Number(
+                document
+                .getElementById(
+                    "moneyAmount"
+                )
+                .value
+            );
+
+
+        if (
+            !amount ||
+            amount <= 0
+        ) {
+
+            alert(
+                "❌ اكتب مبلغ صحيح"
+            );
+
+            return;
+
+        }
+
+
+        if (!members[member]) {
+
+            alert(
+                "❌ العضو غير موجود"
+            );
+
+            return;
+
+        }
+
+
+        members[member].money +=
+            amount;
+
+
+        saveMembers();
+
+
+        alert(
+            "✅ تم إضافة " +
+            amount +
+            "k بيلي إلى " +
+            member
+        );
+
+
+        document
+        .getElementById(
+            "moneyAmount"
+        )
+        .value = "";
+
+    }
+);
+
+
+/* =====================================
+   خصم بيلي
+===================================== */
+
+document
+.getElementById(
+    "removeMoney"
+)
+.addEventListener(
+    "click",
+    function() {
+
+        const member =
+            document
+            .getElementById(
+                "memberSelect"
+            )
+            .value;
+
+
+        const amount =
+            Number(
+                document
+                .getElementById(
+                    "moneyAmount"
+                )
+                .value
+            );
+
+
+        if (
+            !amount ||
+            amount <= 0
+        ) {
+
+            alert(
+                "❌ اكتب مبلغ صحيح"
+            );
+
+            return;
+
+        }
+
+
+        if (!members[member]) {
+
+            alert(
+                "❌ العضو غير موجود"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            members[member].money <
+            amount
+        ) {
+
+            alert(
+                "❌ رصيد " +
+                member +
+                " لا يكفي"
+            );
+
+            return;
+
+        }
+
+
+        members[member].money -=
+            amount;
+
+
+        saveMembers();
+
+
+        alert(
+            "✅ تم خصم " +
+            amount +
+            "k بيلي من " +
+            member
+        );
+
+
+        document
+        .getElementById(
+            "moneyAmount"
+        )
+        .value = "";
+
+    }
+);
+
+
+/* =====================================
+   إضافة عملية شراء
+===================================== */
+
+document
+.getElementById(
+    "addPurchase"
+)
+.addEventListener(
+    "click",
+    function() {
+
+        const member =
+            document
+            .getElementById(
+                "purchaseMember"
+            )
+            .value;
+
+
+        const name =
+            document
+            .getElementById(
+                "purchaseName"
+            )
+            .value
+            .trim();
+
+
+        const price =
+            Number(
+                document
+                .getElementById(
+                    "purchasePrice"
+                )
+                .value
+            );
+
+
+        if (
+            !name ||
+            !price ||
+            price <= 0
+        ) {
+
+            alert(
+                "❌ أدخل اسم المشتريات والسعر"
+            );
+
+            return;
+
+        }
+
+
+        if (!members[member]) {
+
+            alert(
+                "❌ العضو غير موجود"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            members[member].money <
+            price
+        ) {
+
+            alert(
+                "❌ رصيد " +
+                member +
+                " لا يكفي"
+            );
+
+            return;
+
+        }
+
+
+        members[member].money -=
+            price;
+
+
+        if (
+            !Array.isArray(
+                members[member].purchases
+            )
+        ) {
+
+            members[member].purchases = [];
+
+        }
+
+
+        members[member].purchases.push({
+
+            name: name,
+
+            price: price,
+
+            date:
+                new Date()
+                .toLocaleDateString(
+                    "ar-IQ"
+                ),
+
+            timestamp:
+                Date.now()
+
+        });
+
+
+        saveMembers();
+
+
+        alert(
+            "✅ تمت عملية الشراء\n\n" +
+            "العضو: " +
+            member +
+            "\n" +
+            "المشتريات: " +
+            name +
+            "\n" +
+            "السعر: " +
+            price +
+            "k"
+        );
+
+
+        document
+        .getElementById(
+            "purchaseName"
+        )
+        .value = "";
+
+
+        document
+        .getElementById(
+            "purchasePrice"
+        )
+        .value = "";
+
+    }
+);
+
+
+/* =====================================
+   القائمة
+===================================== */
+
+const menuBtn =
+    document.getElementById(
+        "menuBtn"
+    );
+
+
+const sideMenu =
+    document.getElementById(
+        "sideMenu"
+    );
+
+
+menuBtn.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        sideMenu.classList.toggle(
+            "active"
+        );
+
+    }
+);
+
+
+sideMenu.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function() {
+
+        sideMenu.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,434 @@
+/* =========================
+   الأساس
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+
+    color: #fff;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #3a0000 0%,
+            #210000 45%,
+            #120000 100%
+        );
+
+    direction: rtl;
+}
+
+
+/* =========================
+   زر القائمة
+========================= */
+
+.menu-btn {
+    position: fixed;
+
+    top: 18px;
+    right: 18px;
+
+    width: 48px;
+    height: 48px;
+
+    background: #210000;
+
+    color: #d4af37;
+
+    border: 2px solid #d4af37;
+
+    border-radius: 12px;
+
+    font-size: 27px;
+
+    cursor: pointer;
+
+    z-index: 10001;
+
+    box-shadow:
+        0 0 18px rgba(212, 175, 55, 0.2);
+
+    transition: 0.2s;
+}
+
+.menu-btn:hover {
+    background: #3a0000;
+
+    transform: scale(1.05);
+
+    box-shadow:
+        0 0 25px rgba(212, 175, 55, 0.35);
+}
+
+
+/* =========================
+   القائمة
+========================= */
+
+.side-menu {
+    position: fixed;
+
+    top: 76px;
+    right: 18px;
+
+    width: 230px;
+
+    padding: 10px;
+
+    background: #1b0000;
+
+    border: 1px solid #d4af37;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.7);
+
+    z-index: 10000;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(-10px);
+
+    transition: 0.2s;
+}
+
+.side-menu.active {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0);
+}
+
+.side-menu-title {
+    padding: 13px;
+
+    text-align: center;
+
+    color: #d4af37;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    border-bottom:
+        1px solid rgba(212, 175, 55, 0.35);
+}
+
+.side-menu-item {
+    display: block;
+
+    padding: 14px 12px;
+
+    margin: 5px 0;
+
+    color: #eee;
+
+    text-decoration: none;
+
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+.side-menu-item:hover {
+    background: #350000;
+
+    color: #d4af37;
+
+    padding-right: 17px;
+}
+
+
+/* =========================
+   الرأس
+========================= */
+
+.hero {
+    text-align: center;
+
+    padding: 70px 20px 35px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(58, 0, 0, 0.75),
+            rgba(27, 0, 0, 0.4)
+        );
+
+    border-bottom:
+        2px solid #d4af37;
+
+    box-shadow:
+        0 5px 25px rgba(0, 0, 0, 0.5);
+}
+
+.logo {
+    font-size: 65px;
+
+    color: #d4af37;
+
+    margin-bottom: 10px;
+
+    text-shadow:
+        0 0 10px rgba(212, 175, 55, 0.6),
+        0 0 25px rgba(212, 175, 55, 0.3);
+}
+
+.hero h1 {
+    margin: 5px 0;
+
+    color: #d4af37;
+
+    font-size: 28px;
+}
+
+.hero p {
+    margin: 10px 0 0;
+
+    color: #ddd;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   المحتوى
+========================= */
+
+main {
+    width: min(600px, 92%);
+
+    margin: 35px auto 60px;
+}
+
+
+/* =========================
+   بطاقات التعديل
+========================= */
+
+.edit-section {
+    background:
+        linear-gradient(
+            145deg,
+            #3a0000,
+            #210000
+        );
+
+    border:
+        1px solid rgba(212, 175, 55, 0.65);
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.6),
+        0 0 20px rgba(212, 175, 55, 0.08);
+}
+
+.edit-section h2 {
+    text-align: center;
+
+    color: #d4af37;
+
+    margin-top: 0;
+
+    margin-bottom: 25px;
+
+    font-size: 22px;
+
+    padding-bottom: 15px;
+
+    border-bottom:
+        1px solid rgba(212, 175, 55, 0.45);
+}
+
+
+/* =========================
+   النصوص
+========================= */
+
+label {
+    display: block;
+
+    margin: 15px 0 8px;
+
+    color: #d4af37;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   الحقول
+========================= */
+
+select,
+input {
+    width: 100%;
+
+    padding: 14px;
+
+    background: #170000;
+
+    color: #fff;
+
+    border:
+        1px solid rgba(212, 175, 55, 0.55);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 16px;
+}
+
+select:focus,
+input:focus {
+    border-color: #d4af37;
+
+    box-shadow:
+        0 0 12px rgba(212, 175, 55, 0.2);
+}
+
+
+/* =========================
+   أزرار البيلي
+========================= */
+
+.money-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 22px;
+}
+
+.money-buttons button {
+    flex: 1;
+
+    padding: 14px 10px;
+
+    border:
+        1px solid #d4af37;
+
+    border-radius: 10px;
+
+    background: #210000;
+
+    color: #d4af37;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.money-buttons button:hover {
+    background: #d4af37;
+
+    color: #210000;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================
+   زر المشتريات
+========================= */
+
+.purchase-button {
+    width: 100%;
+
+    margin-top: 22px;
+
+    padding: 14px;
+
+    background: #d4af37;
+
+    color: #210000;
+
+    border: none;
+
+    border-radius: 10px;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.purchase-button:hover {
+    background: #e6c34a;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 20px rgba(212, 175, 55, 0.25);
+}
+
+
+/* =========================
+   الجوال
+========================= */
+
+@media (max-width: 600px) {
+
+    .menu-btn {
+        top: 14px;
+
+        right: 14px;
+
+        width: 45px;
+
+        height: 45px;
+    }
+
+    .side-menu {
+        top: 68px;
+
+        right: 14px;
+
+        width: 215px;
+    }
+
+    .hero {
+        padding-top: 75px;
+    }
+
+    .logo {
+        font-size: 55px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .edit-section {
+        padding: 20px;
+    }
+
+    .money-buttons {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>فالهالا بنك</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+#memberModal {
+    display: none !important;
+}
+
+#memberModal.open {
+    display: flex !important;
+}
+
+.member-image img {
+    width: 57px;
+    height: 57px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #b99628;
+}
+
+.modal-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     القائمة
+========================= -->
+
+<button
+    id="menuBtn"
+    class="menu-btn"
+    type="button"
+>
+    ☰
+</button>
+
+
+<div
+    id="sideMenu"
+    class="side-menu"
+>
+
+    <div class="side-menu-title">
+        ⚜️ فالهالا
+    </div>
+
+    <a
+        href="index.html"
+        class="side-menu-item"
+    >
+        🪙 بنك فالهالا
+    </a>
+
+    <a
+        href="admin.html"
+        class="side-menu-item"
+    >
+        ⚜️ إدارة فالهالا
+    </a>
+
+    <a
+        href="edit-bank.html"
+        class="side-menu-item"
+    >
+        ⚙️ إدارة تعديل البنك
+    </a>
+
+</div>
+
+
+<!-- =========================
+     الرأس
+========================= -->
+
+<header class="hero">
+
+    <div class="logo">
+        ⚜️
+    </div>
+
+    <h1>
+        فالهالا بنك
+    </h1>
+
+    <p>
+        البنك الرسمي لنقابة فالهالا
+    </p>
+
+</header>
+
+
+<main>
+
+
+<!-- =========================
+     البحث
+========================= -->
+
+<section class="search-section">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 ابحث عن اسم العضو..."
+        autocomplete="off"
+    >
+
+</section>
+
+
+<!-- =========================
+     البنك
+========================= -->
+
+<section class="bank-section">
+
+    <div
+        class="bank-table"
+        id="bankTable"
+    >
+
+        <div class="bank-header">
+
+            <div>
+                الصورة
+            </div>
+
+            <div>
+                اللقب
+            </div>
+
+            <div>
+                البيلي 🪙
+            </div>
+
+        </div>
+
+
+        <div id="membersList"></div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     نافذة العضو
+========================= -->
+
+<div
+    id="memberModal"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <button
+            id="closeModal"
+            class="close-modal"
+            type="button"
+        >
+            ×
+        </button>
+
+
+        <div
+            id="modalImage"
+            class="modal-image"
+        >
+            ⚜️
+        </div>
+
+
+        <div class="modal-info">
+
+            <p>
+
+                <strong>
+                    اللقب :-
+                </strong>
+
+                <span id="modalName">
+                    ---
+                </span>
+
+            </p>
+
+
+            <p>
+
+                <strong>
+                    الرصيد :-
+                </strong>
+
+                <span id="modalMoney">
+                    ---
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <!-- =========================
+             آخر عمليات الشراء
+        ========================= -->
+
+        <div class="transactions">
+
+            <div
+                id="transactionsTitle"
+                class="transactions-title"
+                role="button"
+                tabindex="0"
+            >
+
+                <span>
+                    آخر عمليات الشراء
+                </span>
+
+                <span id="arrow">
+                    ▼
+                </span>
+
+            </div>
+
+
+            <div
+                id="transactionsList"
+                class="transactions-list"
+            >
+
+                <div class="no-transactions">
+                    لا توجد أي عمليات شراء
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =====================================
+   الأعضاء الأساسيون
+===================================== */
+
+const DEFAULT_MEMBERS = {
+
+    "ايس": {
+        money: 100,
+        image: "⚜️",
+        purchases: []
+    },
+
+    "شارلوك": {
+        money: 250,
+        image: "⚜️",
+        purchases: []
+    },
+
+    "اوراهارا": {
+        money: 100,
+        image: "⚜️",
+        purchases: []
+    },
+
+    "شيسوي": {
+        money: 100,
+        image: "⚜️",
+        purchases: []
+    },
+
+    "رانبو": {
+        money: 100,
+        image: "⚜️",
+        purchases: []
+    }
+
+};
+
+
+/* =====================================
+   قراءة البيانات
+===================================== */
+
+let members = {};
+
+try {
+
+    const saved =
+        localStorage.getItem(
+            "valhallaMembers"
+        );
+
+
+    if (saved) {
+
+        const parsed =
+            JSON.parse(saved);
+
+
+        if (
+            parsed &&
+            typeof parsed === "object" &&
+            !Array.isArray(parsed)
+        ) {
+
+            members = parsed;
+
+        }
+
+    }
+
+} catch (error) {
+
+    members = {};
+
+}
+
+
+/* =====================================
+   إصلاح البيانات
+===================================== */
+
+Object.keys(members).forEach(
+    function(name) {
+
+        if (
+            typeof members[name] === "number"
+        ) {
+
+            members[name] = {
+
+                money: members[name],
+
+                image: "⚜️",
+
+                purchases: []
+
+            };
+
+        }
+
+
+        if (
+            !members[name] ||
+            typeof members[name] !== "object"
+        ) {
+
+            delete members[name];
+
+            return;
+
+        }
+
+
+        if (
+            typeof members[name].money !== "number"
+        ) {
+
+            members[name].money = 0;
+
+        }
+
+
+        if (!members[name].image) {
+
+            members[name].image = "⚜️";
+
+        }
+
+
+        if (
+            !Array.isArray(
+                members[name].purchases
+            )
+        ) {
+
+            members[name].purchases = [];
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   ضمان وجود الأعضاء الأساسيين
+===================================== */
+
+Object.keys(DEFAULT_MEMBERS).forEach(
+    function(name) {
+
+        if (!members[name]) {
+
+            members[name] = {
+
+                money:
+                    DEFAULT_MEMBERS[name].money,
+
+                image:
+                    DEFAULT_MEMBERS[name].image,
+
+                purchases: []
+
+            };
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   حفظ البيانات
+===================================== */
+
+function saveMembers() {
+
+    localStorage.setItem(
+        "valhallaMembers",
+        JSON.stringify(members)
+    );
+
+}
+
+
+saveMembers();
+
+
+/* =====================================
+   تنسيق البيلي
+===================================== */
+
+function formatMoney(money) {
+
+    money = Number(money) || 0;
+
+
+    if (money < 1000) {
+
+        return money + "k";
+
+    }
+
+
+    if (money < 1000000) {
+
+        return cleanNumber(
+            money / 1000
+        ) + "M";
+
+    }
+
+
+    return cleanNumber(
+        money / 1000000
+    ) + "B";
+
+}
+
+
+function cleanNumber(number) {
+
+    return Number(
+        number.toFixed(3)
+    ).toString();
+
+}
+
+
+/* =====================================
+   صورة العضو
+===================================== */
+
+function createImage(image) {
+
+    if (
+        !image ||
+        image === "⚜️"
+    ) {
+
+        return `
+            <div class="member-image">
+                <span>⚜️</span>
+            </div>
+        `;
+
+    }
+
+
+    return `
+        <div class="member-image">
+            <img
+                src="${image}"
+                alt="صورة العضو"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<span>⚜️</span>';"
+            >
+        </div>
+    `;
+
+}
+
+
+/* =====================================
+   حذف عمليات الشراء بعد 24 ساعة
+===================================== */
+
+function cleanOldPurchases() {
+
+    const now = Date.now();
+
+    const twentyFourHours =
+        24 * 60 * 60 * 1000;
+
+    let changed = false;
+
+
+    Object.keys(members).forEach(
+        function(name) {
+
+            if (
+                !Array.isArray(
+                    members[name].purchases
+                )
+            ) {
+
+                members[name].purchases = [];
+
+                changed = true;
+
+                return;
+
+            }
+
+
+            const oldLength =
+                members[name].purchases.length;
+
+
+            members[name].purchases =
+                members[name].purchases.filter(
+                    function(purchase) {
+
+                        /*
+                         * العمليات القديمة التي
+                         * لا تحتوي على وقت تبقى.
+                         */
+
+                        if (
+                            !purchase.timestamp
+                        ) {
+
+                            return true;
+
+                        }
+
+
+                        return (
+                            now -
+                            Number(
+                                purchase.timestamp
+                            )
+                        ) < twentyFourHours;
+
+                    }
+                );
+
+
+            if (
+                members[name].purchases.length
+                !== oldLength
+            ) {
+
+                changed = true;
+
+            }
+
+        }
+    );
+
+
+    if (changed) {
+
+        saveMembers();
+
+    }
+
+}
+
+
+/* =====================================
+   عرض الأعضاء
+===================================== */
+
+function renderMembers() {
+
+    const list =
+        document.getElementById(
+            "membersList"
+        );
+
+
+    if (!list) {
+        return;
+    }
+
+
+    list.innerHTML = "";
+
+
+    Object.keys(members).forEach(
+        function(name) {
+
+            const member =
+                members[name];
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "member-row";
+
+
+            row.dataset.name =
+                name;
+
+
+            row.innerHTML = `
+
+                ${createImage(
+                    member.image
+                )}
+
+                <div class="member-name">
+                    ${name}
+                </div>
+
+                <div class="member-money">
+                    ${formatMoney(
+                        member.money
+                    )}
+                    🪙
+                </div>
+
+            `;
+
+
+            row.onclick =
+                function() {
+
+                    openMember(name);
+
+                };
+
+
+            list.appendChild(row);
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   عرض عمليات الشراء
+===================================== */
+
+function renderPurchases(member) {
+
+    const list =
+        document.getElementById(
+            "transactionsList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    const purchases =
+        Array.isArray(member.purchases)
+        ? member.purchases
+        : [];
+
+
+    if (purchases.length === 0) {
+
+        list.innerHTML = `
+            <div class="no-transactions">
+                لا توجد أي عمليات شراء
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    purchases
+    .slice()
+    .reverse()
+    .forEach(
+        function(purchase) {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "transaction-item";
+
+
+            item.style.padding =
+                "10px";
+
+
+            item.style.marginBottom =
+                "8px";
+
+
+            item.style.borderBottom =
+                "1px solid rgba(212,175,55,0.2)";
+
+
+            item.innerHTML = `
+
+                <strong>
+                    ${purchase.name}
+                </strong>
+
+                <br>
+
+                السعر:
+                ${formatMoney(
+                    purchase.price
+                )}
+                🪙
+
+                <br>
+
+                <small>
+                    ${purchase.date}
+                </small>
+
+            `;
+
+
+            list.appendChild(item);
+
+        }
+    );
+
+}
+
+
+/* =====================================
+   فتح العضو
+===================================== */
+
+function openMember(name) {
+
+    cleanOldPurchases();
+
+
+    const member =
+        members[name];
+
+
+    if (!member) {
+        return;
+    }
+
+
+    document
+    .getElementById(
+        "modalName"
+    )
+    .textContent =
+        name;
+
+
+    document
+    .getElementById(
+        "modalMoney"
+    )
+    .textContent =
+        formatMoney(
+            member.money
+        ) + " 🪙";
+
+
+    /* الصورة */
+
+    const modalImage =
+        document.getElementById(
+            "modalImage"
+        );
+
+
+    modalImage.innerHTML = "";
+
+
+    if (
+        member.image &&
+        member.image !== "⚜️"
+    ) {
+
+        const img =
+            document.createElement(
+                "img"
+            );
+
+
+        img.src =
+            member.image;
+
+
+        img.alt =
+            "صورة " + name;
+
+
+        img.onerror =
+            function() {
+
+                modalImage.innerHTML =
+                    "⚜️";
+
+            };
+
+
+        modalImage.appendChild(
+            img
+        );
+
+    } else {
+
+        modalImage.textContent =
+            "⚜️";
+
+    }
+
+
+    /* عمليات الشراء */
+
+    renderPurchases(member);
+
+
+    /* فتح النافذة */
+
+    const modal =
+        document.getElementById(
+            "memberModal"
+        );
+
+
+    modal.classList.add("open");
+
+    modal.style.display = "flex";
+
+
+    /* العمليات مغلقة بالبداية */
+
+    document
+    .getElementById(
+        "transactionsList"
+    )
+    .style.display =
+        "none";
+
+
+    document
+    .getElementById(
+        "arrow"
+    )
+    .style.transform =
+        "rotate(0deg)";
+
+}
+
+
+/* =====================================
+   إغلاق النافذة
+===================================== */
+
+function closeMemberModal() {
+
+    const modal =
+        document.getElementById(
+            "memberModal"
+        );
+
+
+    modal.classList.remove("open");
+
+    modal.style.display = "none";
+
+}
+
+
+document
+.getElementById(
+    "closeModal"
+)
+.onclick =
+    function(event) {
+
+        event.stopPropagation();
+
+        closeMemberModal();
+
+    };
+
+
+/* الضغط خارج النافذة */
+
+document
+.getElementById(
+    "memberModal"
+)
+.onclick =
+    function(event) {
+
+        if (
+            event.target === this
+        ) {
+
+            closeMemberModal();
+
+        }
+
+    };
+
+
+/* =====================================
+   زر آخر عمليات الشراء
+===================================== */
+
+const transactionsTitle =
+    document.getElementById(
+        "transactionsTitle"
+    );
+
+
+const transactionsList =
+    document.getElementById(
+        "transactionsList"
+    );
+
+
+const arrow =
+    document.getElementById(
+        "arrow"
+    );
+
+
+transactionsList.style.display =
+    "none";
+
+
+transactionsTitle.onclick =
+    function() {
+
+        cleanOldPurchases();
+
+
+        const memberName =
+            document
+            .getElementById(
+                "modalName"
+            )
+            .textContent;
+
+
+        const member =
+            members[memberName];
+
+
+        if (
+            transactionsList.style.display ===
+            "none"
+        ) {
+
+            if (member) {
+
+                renderPurchases(member);
+
+            }
+
+
+            transactionsList.style.display =
+                "block";
+
+
+            arrow.style.transform =
+                "rotate(180deg)";
+
+        } else {
+
+            transactionsList.style.display =
+                "none";
+
+
+            arrow.style.transform =
+                "rotate(0deg)";
+
+        }
+
+    };
+
+
+/* =====================================
+   البحث
+===================================== */
+
+document
+.getElementById(
+    "searchInput"
+)
+.oninput =
+    function() {
+
+        const search =
+            this.value
+            .trim()
+            .toLowerCase();
+
+
+        const rows =
+            document.querySelectorAll(
+                ".member-row"
+            );
+
+
+        rows.forEach(
+            function(row) {
+
+                const name =
+                    row.dataset.name
+                    .toLowerCase();
+
+
+                row.style.display =
+                    name.includes(search)
+                    ? "grid"
+                    : "none";
+
+            }
+        );
+
+    };
+
+
+/* =====================================
+   القائمة الجانبية
+===================================== */
+
+const menuBtn =
+    document.getElementById(
+        "menuBtn"
+    );
+
+
+const sideMenu =
+    document.getElementById(
+        "sideMenu"
+    );
+
+
+menuBtn.onclick =
+    function(event) {
+
+        event.stopPropagation();
+
+        sideMenu.classList.toggle(
+            "active"
+        );
+
+    };
+
+
+sideMenu.onclick =
+    function(event) {
+
+        event.stopPropagation();
+
+    };
+
+
+document.onclick =
+    function() {
+
+        sideMenu.classList.remove(
+            "active"
+        );
+
+    };
+
+
+/* =====================================
+   تنظيف العمليات القديمة
+===================================== */
+
+cleanOldPurchases();
+
+
+/* =====================================
+   تشغيل البنك
+===================================== */
+
+renderMembers();
+
+
+</script>
+
+</body>
+
+</html>
